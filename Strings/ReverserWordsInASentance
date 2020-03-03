@@ -1,0 +1,24 @@
+// Problem Statement : Given an input string, reverse the string word by word.
+// Time Complexity : O(N) where N is length of the string
+// Space Complexity: O(N) where N is length of the string
+
+public class Solution {
+    public string ReverseWords(string s) {
+        if(s=="")
+            return s;
+        s = s.Trim();
+        while(s.Contains("  ")) s = s.Replace("  ", " ");
+        string[] stringArray = s.Split(" ");
+        int start =0;
+        int end = stringArray.Length-1;
+        while(start<=end)
+        {
+            string temp = stringArray[start];
+            stringArray[start] = stringArray[end];
+            stringArray[end]= temp;
+            start++;
+            end--;
+        }
+        return String.Join(" ",stringArray);
+    }
+}
