@@ -1,0 +1,28 @@
+// Problem Statement : Given a set of distinct integers, nums, return all possible subsets (the power //set).
+// Time complexity: O(2^n * n)
+// Space Complexity : O(2^n) where n is the number of elements in the array
+
+Note: The solution set must not contain duplicate subsets.
+
+public class Solution {
+    public IList<IList<int>> Subsets(int[] arr) {
+         var res = new List<IList<int>>();
+          res.Add(new List<int>());
+       if(arr.Length!=0)
+       {
+            for(int i=0;i<arr.Length;i++)
+            {
+                int size = res.Count;
+                for(int y=0;y<size;y++)
+                {
+                    var temp = new List<int>(res[y]);
+                    temp.Add(arr[i]);
+                    res.Add(temp);
+                }
+            }
+           
+       }
+        
+        return res;
+    }
+}
