@@ -1,0 +1,64 @@
+// Problem Statement : Write a program to find the node at which the intersection of two singly linked lists begins.
+// Time Complexity : O(M + N)
+// Space Complexity : O(1)
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode GetIntersectionNode(ListNode headA, ListNode headB) {
+        // Edge cases
+        if(headA==null || headB==null)
+            return null;
+        // length of list 1
+        int lenA =0;
+        int lenB =0;
+        ListNode l1 = headA;
+        while(l1!=null)
+        {
+            lenA++;
+            l1= l1.next;
+        }
+        ListNode l2 = headB;
+        while(l2!=null)
+        {
+            lenB++;
+            l2= l2.next;
+        }
+        l1= headA;
+        l2=headB;
+        int diff = Math.Abs(lenA-lenB);
+        if(lenA>lenB)
+        {
+            while(diff>0)
+            {
+                l1= l1.next;
+                diff--;
+            }
+        }
+        else if(lenA< lenB)
+        {
+             while(diff>0)
+            {
+                l2= l2.next;
+                diff--;
+            }
+        }
+        Console.WriteLine(l1.val);
+            Console.WriteLine(l2.val);
+        while(l1!=null && l2!=null)
+        {
+            if(l1 == l2)
+                return l1;
+            l1= l1.next;
+            l2=l2.next;
+        }
+        
+        return null;
+    }
+}
