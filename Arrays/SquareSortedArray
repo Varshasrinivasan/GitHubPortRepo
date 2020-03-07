@@ -1,0 +1,34 @@
+// Problem Statement :Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number, also in sorted non-decreasing order.
+
+// Time Complexity : O(N) where N is number of elements in the array
+// Space Complexity : O(N) where N is number of elements in the array
+public class Solution {
+    public int[] SortedSquares(int[] A) {
+        int len = A.Length;
+        if(len==0)
+            return A;
+        if(len==1)
+            return new int[]{A[0]*A[0]};
+        int[] res = new int[len];
+        int start =0;
+        int end = len-1;
+        int index =len-1;
+        while(start<=end)
+        {
+            int numA = A[start]*A[start];
+            int numB = A[end]*A[end];
+            if(Math.Abs(A[start])>Math.Abs(A[end]))
+            {
+                res[index] = numA;
+                start++;
+            }
+            else
+            {
+                res[index] = numB;
+                end--;
+            }
+            index--;
+        }
+        return res;
+    }
+}
