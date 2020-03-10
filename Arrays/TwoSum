@@ -1,0 +1,22 @@
+// Problem Statement :Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+//You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+// TC : O(N)
+// SC : O(N)
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        Dictionary<int,int> dict = new Dictionary<int,int>();
+        for(int i=0;i<nums.Length;i++)
+        {
+            if(dict.ContainsKey(target-nums[i]))
+            {
+                int elem = dict[target-nums[i]];
+                    return new int[]{elem,i};
+            }
+            if(!dict.ContainsKey(nums[i]))
+                dict.Add(nums[i],i);
+        }
+        
+        return new int[2];
+    }
+}
