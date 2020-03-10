@@ -1,0 +1,42 @@
+// Problem Statement :
+// Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+//Complexity Analysis
+// Time complexity : O(M \times N)O(M×N) where MM is the number of rows and NN is the number of columns.
+// Space complexity : worst case O(M \times N)O(M×N) in case that the grid map is filled with lands where DFS goes by M \times NM×N deep.
+public class Solution {
+    public int NumIslands(char[][] grid) {
+        int count=0;
+        int rowLen = grid.Length;
+        // edge case
+        if(rowLen==0)
+            return 0;
+        int colLen = grid[0].Length;
+        for(int i=0;i<rowLen;i++)
+        {
+            for(int j=0;j<colLen;j++)
+            {
+                if(grid[i][j]=='1')
+                {
+                    count++;
+                    DFS(grid, i, j);
+                }
+            }
+        }
+        return count;
+    }
+    
+    public void DFS(char[][] grid, int i, int j)
+    {
+        // bases case to break recursion
+        if(i<0 || i>= grid.Length || j<0 || j>=grid[i].Length || grid[i][j]=='0')
+            return;
+        
+        grid[i][j]='0';
+        DFS(grid,i-1,j); // above row
+        DFS(grid,i+1,j); // below row
+        DFS(grid,i,j-1); // prev col
+        DFS(grid,i,j+1); // next col
+    }
+
+}
