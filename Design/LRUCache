@@ -1,0 +1,97 @@
+public class LRUCache {
+
+    // We use a double linked list 
+    // Declaring a listnode of a DLL
+    public class Node
+    {
+        public int val;
+        public int key;
+        public Node prev;
+        public Node next;
+
+    }
+    // Create a dictionary
+    public Dictionary<int,Node> dict = new Dictionary<int,Node>();
+    public Node head = new Node();
+    public Node tail = new Node();
+    public int currCapacity=0;
+    public int maxCapacity=0;
+    
+    public LRUCache(int capacity) {
+        maxCapacity = capacity;
+        head.next = tail;
+        tail.prev = head;
+        
+    }
+    public int Get(int key) {
+        if(dict.ContainsKey(key))
+        {
+            Node res = dict[key];
+            Delete(res);
+            Add(res);
+            return res.val;
+        }
+        return -1;
+
+    }
+    
+    public void Put(int key, int value) {
+        
+        if(dict.ContainsKey(key))
+            {
+                Node node =dict[key];
+                Delete(node);
+               node.val = value;
+                Add(node);
+
+            }
+            else
+            {
+                if(dict.Count== maxCapacity)
+                { 
+                    Node prev_tail = tail.prev;
+                    dict.Remove(prev_tail.key);
+                    Delete(prev_tail);
+                }
+                    Node newNode = new Node();
+                    newNode.val = value;
+                    newNode.key = key;
+                    Add(newNode);
+                    dict.Add(key, newNode);
+            }
+
+    }
+
+    // Delete a node in the DLL
+    public void Delete(Node node)
+    {
+        
+         Node node_next = node.next;
+            Node node_prev = node.prev;
+            node_next.prev = node_prev;
+            node_prev.next = node_next;
+        currCapacity--;
+        
+       
+    }
+    
+    // Add a node in the DLL
+    // We add the node to the first of the DLL
+    public void Add(Node node)
+    {
+           Node head_next = head.next;
+            head.next = node;
+            node.prev = head;
+            node.next = head_next;
+            head_next.prev = node;
+        currCapacity++;
+    
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.Get(key);
+ * obj.Put(key,value);
+ */
