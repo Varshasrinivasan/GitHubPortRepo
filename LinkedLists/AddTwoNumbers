@@ -1,0 +1,41 @@
+//Problem Statement : You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+//You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+// TC : O(Max(M,N))
+// SC : O(Max(M,N))
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        int carry =0;
+        ListNode _l1 = l1;
+        ListNode _l2 = l2;
+         ListNode l3 = dummy;
+        while(_l1!=null || _l2!=null)
+        {
+            int l1Value = _l1!=null? _l1.val : 0;
+            int l2Value = _l2!=null? _l2.val : 0;
+            int sum = l1Value + l2Value+ carry;
+            int nodeVal = sum%10;
+            carry = sum/10;
+            l3.next = new ListNode(nodeVal);
+            l3 = l3.next;
+            if(_l1!=null) _l1=_l1.next;
+            if(_l2!=null) _l2=_l2.next;
+        }
+        
+        if(carry>0)
+        {
+            l3.next = new ListNode(carry);
+        }
+        return dummy.next;
+        
+    }
+}
