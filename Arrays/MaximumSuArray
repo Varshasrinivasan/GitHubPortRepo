@@ -1,0 +1,19 @@
+// Prbolem : Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+// TC : O(N)
+// SC : O(1)
+public class Solution {
+    public int MaxSubArray(int[] nums) {
+        int len = nums.Length;
+        if(len==0)
+            return int.MinValue;
+        int currMax =nums[0];
+        int max =nums[0];
+        
+        for(int i=1;i<len;i++)
+        {
+            currMax = Math.Max(currMax+nums[i], nums[i]);
+            max = currMax > max? currMax: max;
+        }
+        return max;
+    }
+}
