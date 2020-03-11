@@ -1,0 +1,37 @@
+// Problem Statement : Given a binary tree, determine if it is a valid binary search tree (BST).
+// Assume a BST is defined as follows:
+// The left subtree of a node contains only nodes with keys less than the node's key.
+// The right subtree of a node contains only nodes with keys greater than the node's key.
+// Both the left and right subtrees must also be binary search trees.
+
+// Time Complexity : O(N) where N is the total number of nodes
+// Space Complexity : O(D) where D is the height of the tree D=Log(N) 
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public bool IsValidBST(TreeNode root) {
+        
+        return IsValidBST(root,null,null);
+        
+    }
+     public bool IsValidBST(TreeNode node, int? min, int? max) {
+         
+         if(node==null)
+             return true;
+        
+         if(min!=null && node.val <= min) return false;
+         if(max!=null && node.val >= max) return false;
+         bool leftNode = IsValidBST(node.left,min,node.val);
+         bool rightNode = IsValidBST(node.right,node.val,max);
+         return leftNode && rightNode;
+         
+     }
+}
