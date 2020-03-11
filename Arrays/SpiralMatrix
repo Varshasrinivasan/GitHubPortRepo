@@ -1,0 +1,42 @@
+public class Solution {
+    public IList<int> SpiralOrder(int[][] matrix) {
+        var res = new List<int>();
+        int rowBegin =0;
+        int rowEnd = matrix.Length-1;
+        if(matrix.Length==0)
+            return res;
+        int colBegin =0;
+        int colEnd= matrix[0].Length-1;
+        while(rowBegin<=rowEnd && colBegin<=colEnd)
+        {
+            for(int i=colBegin;i<=colEnd;i++)
+            {
+                res.Add(matrix[rowBegin][i]);
+            }
+            rowBegin++;
+            
+            for( int i=rowBegin;i<=rowEnd;i++)
+            {
+                res.Add(matrix[i][colEnd]);
+            }
+            colEnd--;
+                if(rowBegin<=rowEnd)
+            {
+                for( int i=colEnd;i>=colBegin;i--)
+                {
+                    res.Add(matrix[rowEnd][i]);
+                }
+            }
+            rowEnd--;
+        if(colBegin<=colEnd)
+            {
+                for(int i=rowEnd;i>=rowBegin;i--)
+                {
+                    res.Add(matrix[i][colBegin]);
+                }
+            }
+            colBegin++;
+        }
+        return res;
+    }
+}
