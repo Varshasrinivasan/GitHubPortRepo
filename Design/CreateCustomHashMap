@@ -1,0 +1,75 @@
+public class MyHashMap {
+public class HashMapNode
+    {
+
+        public int key { get; set; }
+        public int val { get; set; }
+
+    }
+      public LinkedList<HashMapNode>[] hash_table;
+        public const int modulo = 2069;
+    
+    /** Initialize your data structure here. */
+    public MyHashMap() {
+         hash_table = new LinkedList<HashMapNode>[modulo];
+    }
+    
+    /** value will always be non-negative. */
+    public void Put(int key, int value) {
+          int hashKey = key % modulo;
+            var linkedlist = hash_table[hashKey];
+            if(linkedlist==null)
+            {
+                linkedlist = new LinkedList<HashMapNode>();
+                linkedlist.AddFirst(new HashMapNode { key = key, val = value });
+                hash_table[hashKey] = linkedlist;
+            }
+            else if(linkedlist.Any(x=> x.key == key))
+            {
+                var existingLinkedListItem = linkedlist.First(x => x.key == key);
+                existingLinkedListItem.val = value;
+
+            }
+            else
+            {
+                linkedlist.AddLast(new HashMapNode { key = key, val = value });
+            }
+    }
+    
+    /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+    public int Get(int key) {
+         int hashKey = key % modulo;
+            var linkedlist = hash_table[hashKey];
+            if (linkedlist == null || !linkedlist.Any(x=> x.key==key))
+            {
+                return -1;
+            }
+            else
+            {
+                var existingLinkedListItem = linkedlist.First(x => x.key == key);
+                return existingLinkedListItem.val;
+
+            }
+        
+    }
+    
+    /** Removes the mapping of the specified value key if this map contains a mapping for the key */
+    public void Remove(int key) {
+          int hashKey = key % modulo;
+            var linkedlist = hash_table[hashKey];
+            if (linkedlist != null && linkedlist.Any(x=> x.key==key))
+            {
+                var existingLinkedListItem = linkedlist.First(x => x.key == key);
+                linkedlist.Remove(existingLinkedListItem);
+
+            }
+    }
+}
+
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * MyHashMap obj = new MyHashMap();
+ * obj.Put(key,value);
+ * int param_2 = obj.Get(key);
+ * obj.Remove(key);
+ */
