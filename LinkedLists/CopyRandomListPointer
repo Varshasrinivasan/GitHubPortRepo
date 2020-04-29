@@ -1,0 +1,56 @@
+// Problem :A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null. Return a deep copy of the list.
+// Time Complexity :O(N)
+// Space Complexity : O(N)
+
+/*
+// Definition for a Node.
+public class Node {
+    public int val;
+    public Node next;
+    public Node random;
+    
+    public Node(int _val) {
+        val = _val;
+        next = null;
+        random = null;
+    }
+}
+*/
+public class Solution {
+    public Node CopyRandomList(Node head) {
+      // edge case
+        if(head==null)
+            return null;
+        // Create a dictionary
+        Dictionary<Node,Node> dict = new Dictionary<Node,Node>();
+        Node curr = head;
+        Node dummy=null;
+        while(curr!=null)
+        {
+            if(!dict.ContainsKey(curr))
+            {
+                dict.Add(curr,new Node(curr.val));
+                
+            }
+            curr = curr.next;
+        }
+        curr = head;
+        while(curr!=null)
+        {
+           if(dict.ContainsKey(curr))
+           {
+              Node newNode = dict[curr];
+                 if(curr.next!=null && dict.ContainsKey(curr.next))
+                 newNode.next = dict[curr.next];
+                 if(curr.random!=null && dict.ContainsKey(curr.random))
+                 newNode.random = dict[curr.random];
+               
+           }
+              curr = curr.next;
+            
+        }
+        return dict[head];
+    
+        
+    }
+}
