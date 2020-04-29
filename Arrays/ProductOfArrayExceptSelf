@@ -1,0 +1,32 @@
+// Problem Given an array nums of n integers where n > 1,  return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
+// Example:
+// Input:  [1,2,3,4]
+// Output: [24,12,8,6]
+
+// Time Complexity : O(N)
+// Space Complexity : O(N)
+public class Solution {
+    public int[] ProductExceptSelf(int[] nums) {
+    int len = nums.Length;
+        if(len==0)
+            return nums;
+        int[] left = new int[len];
+        int[] right = new int[len];
+        left[0]= 1;
+        for(int i=1;i<len;i++)
+        {
+            left[i] = left[i-1]*nums[i-1];
+        }
+        right[len-1]=1;
+        for(int j=len-1;j>0;j--)
+        {
+           right[j-1] = right[j]*nums[j];
+           
+        }
+       for(int i=0;i<len;i++)
+        {
+            left[i] = left[i]*right[i];
+        }
+        return left;
+    }
+}
