@@ -1,0 +1,30 @@
+// Problem :
+// Reverse a singly linked list.
+// Time Complexity : O(N)
+// Space Complexity : O(1)
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode ReverseList(ListNode head) {
+        if(head==null)
+            return null;
+     ListNode rev = null;
+         ListNode curr = head;
+        ListNode curr_next = head;
+        while(curr!=null)
+        {
+            curr_next = curr.next;
+            curr.next = rev;
+            rev = curr;
+            curr = curr_next;
+        }
+        
+        return rev;
+    }
+}
