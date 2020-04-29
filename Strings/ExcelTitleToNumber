@@ -1,0 +1,38 @@
+//Given a column title as appear in an Excel sheet, return its corresponding column number.
+// For example:
+//     A -> 1
+//     B -> 2
+//     C -> 3
+//     ...
+//     Z -> 26
+//     AA -> 27
+//     AB -> 28 
+//     ...
+
+public class Solution {
+    public int TitleToNumber(string s) {
+        
+        if(s=="")
+            return 0;
+        int sum =0;
+        
+        for(int i=0;i<s.Length;i++)
+        {
+            sum = sum*26;
+            sum = sum+s[i]-'A'+1;
+            Console.WriteLine(s[i]-'A'+1);
+        }
+        return sum;
+        
+    }
+}
+
+// The process is similar to binary to decimal conversion.
+// For example, to convert AB, we do 26 * 1 + 2.
+// As another example, to convert CDA, we do
+// 3*26*26 + 4*26 + 1
+// =>26(3*26 + 4)+ 1
+// =>26(0*26 + 3*26 +4)+1
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
