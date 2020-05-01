@@ -1,0 +1,32 @@
+// Problem :Given a collection of intervals, merge all overlapping intervals.
+// Time Complexity : O(NlogN) --> sorting + O(N) --> to look at each element
+// Space Complexity : O(N)
+
+public class Solution {
+    public int[][] Merge(int[][] intervals) {
+        int len = intervals.Length;
+        if(len<=1)
+            return intervals;
+        // the intervals need to be sorted
+      Array.Sort(intervals, (a, b) => a[0] - b[0]);
+        
+       var res = new List<int[]>();
+        res.Add(intervals.ElementAt(0));
+     
+        for(int i=1;i<len;i++)
+        {
+            var currElement = intervals.ElementAt(i);
+            var lastELement = res.Last();
+            if(currElement[0]<=lastELement[1])
+            {
+                lastELement[1] = Math.Max(currElement[1],lastELement[1]);
+            }
+            else
+            {
+                res.Add(currElement);
+            }
+        }
+        return res.ToArray();
+    }
+}
+
