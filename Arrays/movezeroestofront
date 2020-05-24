@@ -1,0 +1,24 @@
+class MoveZeros{
+  static void moveZerosToLeft(int[] A) {
+    //TODO: Write - Your - Code
+    int len = A.length;
+    if(len==0|| len==1)
+    {
+      return ;
+    }
+    int nonzeroindex= len-1;
+    for(int i=len-1;i>=0;i--)
+    {
+        if(A[i]!=0)
+        {
+          A[nonzeroindex]= A[i];
+          nonzeroindex--;
+        }
+    }
+    while(nonzeroindex>=0)
+    {
+      A[nonzeroindex]=0;
+      nonzeroindex--;
+    }
+  }
+}  
