@@ -1,0 +1,33 @@
+using System;
+namespace Strings
+{
+    public class StringPalindrome
+    {
+        public bool isPalindrome(char[] inpStr)
+        {
+            int len = inpStr.Length;
+            if (len == 0 || len == 1)
+                return true;
+            else
+            {
+                int start = 0;
+                int end = len - 1;
+                while (start <=end)
+                {
+                    if (inpStr[start] != inpStr[end])
+                        return false;
+                    start++;
+                    end--;
+                }
+                return true;
+            }
+        }
+        public static void Main(string[] args)
+        {
+            StringPalindrome obj = new StringPalindrome();
+            string inp = "hahah";
+            char[] s = inp.ToCharArray();
+            Console.WriteLine(obj.isPalindrome(s));
+        }
+    }
+}
