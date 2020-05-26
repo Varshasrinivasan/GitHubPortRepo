@@ -1,0 +1,43 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int MaxLevelSum(TreeNode root) {
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        int max_sum = 0;
+        int max_level = 1;
+        int level = 1;
+        
+        if(root==null)
+            return 0;
+        queue.Enqueue(root);
+        while(queue.Count!=0)
+        {
+            int size = queue.Count;
+            int sum =0;
+            
+            for(int i=0;i<size;i++)
+            {
+                var temp = queue.Dequeue();
+                sum = sum + temp.val;
+                if(temp.left!=null)
+                    queue.Enqueue(temp.left);
+                if(temp.right!=null)
+                    queue.Enqueue(temp.right);
+            }
+            if(sum>max_sum)
+            {
+                max_sum = sum;
+                max_level = level;
+            }
+            level ++;
+        }
+        return max_level;
+    }
+}
