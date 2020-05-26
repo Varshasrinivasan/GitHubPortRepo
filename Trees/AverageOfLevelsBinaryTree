@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+
+namespace Trees
+{
+    // Problem Statement : Given a binary tree, populate an array to represent the averages of all of its levels.
+    // Solution : Implement BFS
+    // Time Complexity : O(N)
+    // Splace complexity : O(N)
+    public class AverageOfLevelsBinaryTree
+    {
+        public static List<double> FindLevelAverages(TreeNode root)
+        {
+            List<double> res = new List<double>();
+            if (root == null)
+                return res;
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while(queue.Count!=0)
+            {
+                int size = queue.Count;
+                double avg = 0.0;
+                for(int i=0;i<size;i++)
+                {
+                    TreeNode temp = queue.Dequeue();
+                    avg = avg + temp.val;
+                    if (temp.left != null)
+                        queue.Enqueue(temp.left);
+                    if (temp.right != null)
+                        queue.Enqueue(temp.right);
+                }
+                res.Add(avg / size);
+            }
+
+            return res;
+        }
+
+        public static void Main(String[] args)
+        {
+            TreeNode root = new TreeNode(12);
+            root.left = new TreeNode(7);
+            root.right = new TreeNode(1);
+            root.left.left = new TreeNode(9);
+            root.left.right = new TreeNode(2);
+            root.right.left = new TreeNode(10);
+            root.right.right = new TreeNode(5);
+            List<double> result = FindLevelAverages(root);
+        }
+    }
+}
