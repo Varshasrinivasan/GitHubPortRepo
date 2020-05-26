@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+namespace Strings
+{
+    public class IsUnique
+    {
+        public bool isStringUnique(string s)
+        {
+            int len = s.Length;
+            if (len == 0 || len == 1)
+                return true;
+            HashSet<char> hsh = new HashSet<char>();
+            for (int i = 0; i < len; i++)
+            {
+                if (hsh.Contains(s[i]))
+                    return false;
+                else
+                {
+                    hsh.Add(s[i]);
+                }
+            }
+            return true;
+        }
+       public static void Main()
+        {
+            IsUnique obj = new IsUnique();
+            Console.WriteLine(obj.isStringUnique("akdbcfevljsh"));
+            Console.WriteLine(obj.isStringUnique("Aabjhbihbkuj"));
+            Console.WriteLine(obj.isStringUnique(""));
+
+        }
+    }
+}
