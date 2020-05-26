@@ -1,0 +1,92 @@
+using System;
+namespace Heaps
+{
+    // Problem Statement : Given an unsorted array of integers, find the K largest numbers
+    // Solution : Inset first K elements into a min heap. Then, for the remaining elements in the list
+    // if the element is larger than the root of the min heap , extract min and insert the element into the heap.
+
+    public class KLargestNumbers
+    {
+        public int heap_size;
+        public int[] heap_array;
+        public KLargestNumbers(int[] arr, int k)
+        {
+            heap_array = new int[k];
+            for (int i=0;i<k;i++)
+            {
+                heap_array[i] = arr[i];
+            }
+            heap_size = k;
+            int z = (k - 1) / 2;
+            while(z>=0)
+            {
+                MinHeapify(z);
+                z--;
+            }
+
+            for(int y= k; y< arr.Length;y++)
+            {
+                if(heap_array[0]<= arr[y])
+                {
+                    ExtractMin();
+                    Insert(arr[y]);
+                }
+            }
+        }
+
+      
+        public void MinHeapify(int i)
+        {
+            int left = i * 2 + 1;
+            int right = i * 2 + 2;
+            int smallest = i;
+            if (left < heap_array.Length && heap_array[left] < heap_array[smallest])
+                smallest = left;
+            if (right < heap_array.Length && heap_array[right] < heap_array[smallest])
+                smallest = right;
+            if(smallest!=i)
+            {
+                Swap(i, smallest);
+                MinHeapify(smallest);
+            }
+        }
+
+        public void ExtractMin()
+        {
+            //int min = heap_array[0];
+            heap_array[0] = heap_array[heap_array.Length - 1];
+            MinHeapify(0);
+        }
+
+        public void Insert(int x)
+        {
+            heap_array[heap_array.Length - 1] = x;
+            int i = heap_array.Length - 1;
+            while(i>=0 && heap_array[heap_array.Length - 1]< heap_array[(i - 1) / 2])
+            {
+                Swap(i, (i - 1) / 2);
+                i = (i - 1) / 2;
+            }
+        }
+
+        public void Swap(int x, int y)
+        {
+            int temp = heap_array[x];
+            heap_array[x] = heap_array[y];
+            heap_array[y] = temp;
+        }
+        public static void Main()
+        {
+            int[] arr = { 5, 12, 11, -1, 12 };
+            int k = 3;
+            KLargestNumbers obj = new KLargestNumbers(arr, k);
+            foreach (var x in obj.heap_array)
+            {
+                Console.WriteLine(x);
+            }
+        }
+
+    }
+   
+ 
+}
