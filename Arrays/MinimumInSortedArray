@@ -1,0 +1,21 @@
+public class Solution {
+    public int FindMin(int[] nums) {
+        if(nums==null || nums.Length==0)
+            return int.MinValue;
+        int start =0;
+        int end = nums.Length-1;
+        while(start<end)
+        {
+            int mid = start + (end-start)/2;
+            if(mid>0 &&nums[mid-1]>nums[mid])
+                return nums[mid];
+            else
+                if(nums[mid]>=nums[start] && nums[mid]>= nums[end])
+                    start = mid+1;
+            else
+                end = mid-1;
+        }
+        
+        return nums[start];
+    }
+}
