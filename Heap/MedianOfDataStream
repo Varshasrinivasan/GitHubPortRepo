@@ -1,0 +1,61 @@
+using System;
+namespace Heaps
+{
+    // Problem Statement : Find the median of a stream of numbers
+    // Solution : Use a min heap and max heap. The numbers to the left of the median are always smaller than the median.
+    // The numbers to the right of the median are always greater than the median. So we can insert all the numbers on the left side into a max heap
+    // and all the numbers on the right side into a min heap. We should make sure that the size of the heaps always remains same. If the total number
+    // of elements in the list is even then the median is the average of minHeap[0]+ maxHeap[0]. If the total number of elements is odd, the median
+    // is the maxHeap[0] (assuming there are more elements in the maxHeap)
+    // Time Complexity: for InsertNum - O(Log(n)) for median - O(1)
+    // Space Complexity : O(n) because we store N elements 
+    public class MedianOfNumberStream
+    {
+        public MinHeap minHeapObj;
+        public MaxHeap maxHeapObj;
+
+        public MedianOfNumberStream()
+        {
+            minHeapObj = new MinHeap();
+            maxHeapObj = new MaxHeap();
+        }
+
+        public void InsertNum(int x)
+        {
+            if (maxHeapObj.heap_size==0 || maxHeapObj.heap_array[0] > x)
+                maxHeapObj.Insert(x);
+            else
+                minHeapObj.Insert(x);
+
+            if(maxHeapObj.heap_size- minHeapObj.heap_size >1)
+            {
+                minHeapObj.Insert(maxHeapObj.Extract_Max());
+            }
+            else if(maxHeapObj.heap_size < minHeapObj.heap_size)
+            {
+                maxHeapObj.Insert(minHeapObj.Extract_Min());
+            }
+
+        }
+
+        public int FindMedian()
+        {
+            if ((minHeapObj.heap_size == maxHeapObj.heap_size))
+                return (minHeapObj.heap_array[0] + maxHeapObj.heap_array[0]) / 2;
+            
+                return maxHeapObj.heap_size > 0 ? maxHeapObj.heap_array[0]: int.MaxValue;
+        }
+
+        public static void Main()
+        {
+            MedianOfNumberStream medianOfAStream = new MedianOfNumberStream();
+            medianOfAStream.InsertNum(10);
+            medianOfAStream.InsertNum(10);
+           Console.WriteLine("The median is: " + medianOfAStream.FindMedian());
+            medianOfAStream.InsertNum(10);
+           Console.WriteLine("The median is: " + medianOfAStream.FindMedian());
+            medianOfAStream.InsertNum(10);
+           Console.WriteLine("The median is: " + medianOfAStream.FindMedian());
+        }
+    }
+}
