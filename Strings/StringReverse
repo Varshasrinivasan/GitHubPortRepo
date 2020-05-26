@@ -1,0 +1,35 @@
+using System;
+
+namespace Strings
+{
+    class StringReverse
+    {
+        public char[] ReverseMethod(char[]  inpStr)
+        {
+            int len = inpStr.Length;
+            if (len != 0)
+            {
+                int start = 0;
+                int end = len - 1;
+               while(start<end)
+                {
+                    char temp = inpStr[start];
+                    inpStr[start] = inpStr[end];
+                    inpStr[end] = temp;
+                    start++;
+                    end--;
+                }
+
+            }
+            return inpStr;
+        }
+
+        public static void Main(string[] args)
+        {
+            StringReverse obj = new StringReverse();
+            string inp = "Hannah";
+            char[] s = inp.ToCharArray();
+            Console.WriteLine(obj.ReverseMethod(s));
+        }
+    }
+}
