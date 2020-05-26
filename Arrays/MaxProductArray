@@ -1,0 +1,23 @@
+// Problem Statement : Maximum Product Subarray
+// Given an integer array nums, find the contiguous subarray within an array
+// (containing at least one number) which has the largest product.
+// Time complexity : O(N)
+// Space complexity : O(1)
+
+public class Solution {
+    public int MaxProduct(int[] nums) {
+      
+        if(nums.Length ==0) return 0;
+          int maxProduct =  nums[0];
+        int currentMax = nums[0];
+        int currentMin = nums[0];
+        for(int i=1;i<nums.Length;i++)
+        {
+            int temp = currentMax;
+            currentMax = Math.Max(Math.Max(currentMax* nums[i],currentMin*nums[i]),nums[i]);
+            currentMin = Math.Min(Math.Min(temp*nums[i],currentMin*nums[i]),nums[i]);
+            maxProduct = maxProduct < currentMax? currentMax: maxProduct;
+        }
+        return maxProduct;
+    }
+}
