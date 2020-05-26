@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+
+namespace StacksQueues
+{
+    public class QueuesUsingStacks
+    {
+        public QueuesUsingStacks()
+        {
+        }
+        Stack<int> stck1 = new Stack<int>();
+        Stack<int> stck2 = new Stack<int>();
+        /** Push element x to the back of queue. */
+        public void Push(int x)
+        {
+            stck1.Push(x);
+        }
+
+        /** Removes the element from in front of queue and returns that element. */
+        public int Pop()
+        {
+            while (stck1.Count > 1)
+            {
+                stck2.Push(stck1.Pop());
+            }
+            int elem = stck1.Pop();
+            while (stck2.Count > 0)
+            {
+                stck1.Push(stck2.Pop());
+            }
+            return elem;
+        }
+
+        /** Get the front element. */
+        public int Peek()
+        {
+                while(stck1.Count>1)
+                {
+                    stck2.Push(stck1.Pop());
+                }
+                int elem = stck1.Pop();
+                stck2.Push(elem);
+                while (stck2.Count > 0)
+                {
+                    stck1.Push(stck2.Pop());
+                }
+                return elem;
+        }
+
+        /** Returns whether the queue is empty. */
+        public bool Empty()
+        {
+            if (stck1.Count == 0)
+                return true;
+            else
+                return false;
+        }
+
+        public static void Main()
+        {
+            QueuesUsingStacks obj = new QueuesUsingStacks();
+
+        }
+    }
+}
