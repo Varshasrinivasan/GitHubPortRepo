@@ -1,0 +1,36 @@
+using System;
+namespace Strings
+{
+    public class CompressString
+    {
+        //String Compression: Implement a method to perform basic string compression using the counts of
+        //repeated characters. For example, the string aabcccccaaa would become a2blc5a3. If the "compressed "string
+        //would not become smaller than the original string, your method should return the original string.
+        //You can assume the string has only uppercase and lowercase letters (a - z)
+        // Time Complexity : O(s.Length) because we have to read all the elements in the string
+        // Space complexity : O(s.Length) worst case if we cannot compress the string
+        public static string Compress(string s)
+        {
+            int consecutiveCount = 1;
+            string res="";
+            for(int i=0;i<s.Length;i++)
+            {
+                char current = s[i];
+                while(i+1< s.Length && s[i]==s[i+1])
+                {
+                    consecutiveCount++;
+                    i++;
+                }
+                res = res + current + consecutiveCount;
+                consecutiveCount = 1;
+            }
+            return res.Length >= s.Length? s : res;
+        }
+
+        public static void Main()
+        {
+            Console.WriteLine("aaabbbba" + Compress("aaabbbba"));
+            Console.WriteLine("aaaaaa"+Compress("abcd"));
+        }
+    }
+}
