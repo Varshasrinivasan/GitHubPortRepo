@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+
+namespace Trees
+{
+    public class ReverseLevelOrderTraversal
+    {
+        public static List<List<int>> Traverse(TreeNode root)
+        {
+            List<List<int>> res = new List<List<int>>();
+            if(root!=null)
+            {
+                Queue<TreeNode> queue = new Queue<TreeNode>();
+                queue.Enqueue(root);
+                while (queue.Count != 0)
+                {
+                    int size = queue.Count;
+                    List<int> lst = new List<int>();
+                    for (int i = 0; i < size; i++)
+                    {
+                        TreeNode temp = queue.Dequeue();
+                        lst.Add(temp.val);
+                        if (temp.left != null)
+                        {
+                            queue.Enqueue(temp.left);
+                        }
+                        if (temp.right != null)
+                        {
+                            queue.Enqueue(temp.right);
+                        }
+                    }
+                    res.Insert(0, lst);
+                }
+            }
+           
+            return res;
+        }
+
+        public static void Main(String[] args)
+        {
+            TreeNode root = new TreeNode(12);
+            root.left = new TreeNode(7);
+            root.right = new TreeNode(1);
+            root.left.left = new TreeNode(9);
+            root.right.left = new TreeNode(10);
+            root.right.right = new TreeNode(5);
+            List<List<int>> result = Traverse(root);
+        }
+    }
+}
