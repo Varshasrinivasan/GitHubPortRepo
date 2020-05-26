@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+
+namespace Graphs
+{
+   
+    public class BFS_Graphs
+    {
+
+        public void BFSMethod(Node topeNode)
+        {
+            Queue<Node> queue = new Queue<Node>();
+            HashSet<int> seen = new HashSet<int>();
+            queue.Enqueue(topeNode);
+            while(queue.Count!=0)
+            {
+                Node curr = queue.Dequeue();
+                if(!seen.Contains(curr.Value))
+                {
+                    Console.WriteLine(curr.Value);
+                    seen.Add(curr.Value);
+
+                }
+                foreach(Node node in curr.Neighbours)
+                {
+                    if(!seen.Contains(node.Value))
+                    {
+                        queue.Enqueue(node);
+                    }
+                }
+            }
+        }
+        public static void Main(string[] args)
+        {
+            Node topNode = new Node() { Value = 1 };
+            topNode.Neighbours.Add(new Node() { Value = 2, Neighbours = new List<Node> { new Node() { Value = 5, Neighbours = new List<Node> { new Node() { Value = 9 } } } } });
+            topNode.Neighbours.Add(new Node() { Value = 3, Neighbours = new List<Node> { new Node() { Value = 6, Neighbours = new List<Node> { new Node() { Value = 10 } } }, new Node() { Value = 7 } } });
+            topNode.Neighbours.Add(new Node() { Value = 4, Neighbours = new List<Node>() { new Node() { Value = 8 } } });
+            BFS_Graphs obj = new BFS_Graphs();
+            obj.BFSMethod(topNode);
+        }
+    }
+}
