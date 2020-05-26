@@ -1,0 +1,73 @@
+using System;
+namespace Trees
+{
+    public class IsTreeSubtree
+    {
+        public class TreeNode
+        {
+            public int val;
+            public TreeNode left;
+            public TreeNode right;
+            public TreeNode(int x) { val = x; }
+        }
+        public string inorder;
+        public string postorder;
+
+
+        public bool IsSubTree(TreeNode tree1, TreeNode tree2)
+        {
+            string tree1Inorder = InorderTraversal(tree1);
+            string tree1Postorder = PostorderTraversal(tree1);
+            inorder = "";
+            postorder = "";
+            string tree2Inorder = InorderTraversal(tree2);
+            string tree2Postorder = PostorderTraversal(tree2);
+            return tree1Inorder.Contains(tree2Inorder) && tree1Postorder.Contains(tree2Postorder);
+        }
+        public string InorderTraversal(TreeNode root)
+        {
+            if (root == null)
+                return inorder + "$";
+            else
+            {
+                InorderTraversal(root.left);
+                inorder = inorder + root.val;
+                InorderTraversal(root.right);
+            }
+            return inorder;
+        }
+
+        public string PostorderTraversal(TreeNode root)
+        {
+            if (root == null)
+                return postorder + "$";
+            else
+            {
+
+                PostorderTraversal(root.left);
+                PostorderTraversal(root.right);
+                postorder = postorder + root.val;
+            }
+            return postorder;
+        }
+        public static void Main(string[] args)
+        {
+            IsTreeSubtree obj = new IsTreeSubtree();
+            TreeNode root = new TreeNode(1);
+            TreeNode left1 = new TreeNode(2);
+            TreeNode right1 = new TreeNode(3);
+            TreeNode left2 = new TreeNode(4);
+            TreeNode right2 = new TreeNode(5);
+            TreeNode left3 = new TreeNode(2);
+            TreeNode right3 = new TreeNode(3);
+            root.left = left1;
+            root.right = right1;
+            left1.left = left2;
+            left1.right = right2;
+            right1.left = left3;
+            TreeNode root2 = new TreeNode(2);
+            root2.left = new TreeNode(left2.val);
+            Console.Write(obj.IsSubTree(root, root2));
+        }
+    }
+}
