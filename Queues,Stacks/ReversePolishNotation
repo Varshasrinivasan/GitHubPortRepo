@@ -1,0 +1,33 @@
+public class Solution {
+    //Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+    //Valid operators are +, -, *, /. Each operand may be an integer or another expression.
+    // Time Complexity : O(s.Length)
+    // Space Complexity : O(# of digits)
+    public int EvalRPN(string[] s) {
+        Stack<int> stck = new Stack<int>();
+        for(int i=0;i<s.Length;i++)
+        {
+            
+            switch(s[i])
+            {
+                    case "+" : stck.Push(stck.Pop()+ stck.Pop());
+                            break;
+                    case "-" : int a =stck.Pop();
+                                int b = stck.Pop();
+                                stck.Push(b-a);
+                            break;
+                    case "*" : stck.Push(stck.Pop()* stck.Pop());
+                            break;
+                    case "/" :  int x =stck.Pop();
+                                int y = stck.Pop();
+                                stck.Push(y/x);
+                            break;
+                    default : stck.Push(Convert.ToInt32(s[i]));
+                                break;
+            }
+        
+        }
+        return stck.Pop();
+    }
+
+}
