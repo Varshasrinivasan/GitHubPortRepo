@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+
+namespace Trees
+{
+    public class MaximumDepth
+    {
+        public class TreeNode
+        {
+            public int val;
+            public TreeNode left;
+            public TreeNode right;
+            public TreeNode(int x) { val = x; }
+        }
+        public static int MaxDepth(TreeNode root)
+        {
+            int height = 0;
+            Queue<TreeNode> q = new Queue<TreeNode>();
+            q.Enqueue(root);
+            while(q.Count!=0)
+            {
+                int size = q.Count;
+                for (int i = 0; i < size; i++)
+                {
+                    TreeNode temp = q.Dequeue();
+                    if (temp.left != null)
+                    {
+                        q.Enqueue(temp.left);
+                    }
+                    if (temp.right != null)
+                    {
+                        q.Enqueue(temp.right);
+                    }
+                }
+                height++;
+
+            }
+            return height;
+        }
+        public static void Main()
+        {
+            TreeNode root = new TreeNode(5);
+            TreeNode level1_left = new TreeNode(4);
+            level1_left.left = new TreeNode(3);
+            level1_left.right = new TreeNode(1);
+            TreeNode level1_right = new TreeNode(6);
+            level1_right.left = new TreeNode(7);
+            root.left = level1_left;
+            root.right = level1_right;
+            //level1_left.right.left = new TreeNode(10);
+            Console.WriteLine(MaxDepth(root));
+        }
+    }
+}
