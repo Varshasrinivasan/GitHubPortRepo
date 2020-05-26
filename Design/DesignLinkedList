@@ -1,0 +1,177 @@
+using System;
+
+namespace Prep
+{
+    // Implement a singly linked list
+  
+    class MyLinkedList
+    {
+        public class Node
+        {
+            public int data;
+            public Node next;
+            public Node(int d)
+            {
+                data = d;
+                next = null;
+            }
+        }
+        /** Initialize your data structure here. */
+        public MyLinkedList()
+        {
+
+        }
+        public Node head = null;
+        /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+        public int Get(int index)
+        {
+            if (head == null || index < 0)
+                return -1;
+            else
+            {
+                Node curr = head;
+                if (index == 0)
+                    return head.data;
+                else
+                {
+                    for (int i = 0; i < index; i++)
+                    {
+                        if (curr.next != null)
+                            curr = curr.next;
+                        else
+                            return -1;
+                    }
+                    if (curr != null)
+                        return curr.data;
+                    else
+                        return -1;
+                }
+
+
+            }
+        }
+
+        /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
+        public void AddAtHead(int val)
+        {
+            if (head == null)
+            {
+                head = new Node(val);
+            }
+            else
+            {
+                Node newNode = new Node(val);
+                newNode.next = head;
+                head = newNode;
+            }
+        }
+
+        /** Append a node of value val to the last element of the linked list. */
+        public void AddAtTail(int val)
+        {
+            if (head == null)
+            {
+                head = new Node(val);
+            }
+            else
+            {
+                Node newNode = new Node(val);
+                Node curr = head;
+                while (curr.next != null)
+                {
+                    curr = curr.next;
+                }
+                curr.next = newNode;
+            }
+        }
+
+        /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
+        public void AddAtIndex(int index, int val)
+        {
+
+            if (head == null)
+            {
+                head = new Node(val);
+            }
+            else
+            {
+
+                if (index == 0)
+                    AddAtHead(val);
+                else
+                {
+                    Node newNode = new Node(val);
+                    Node curr = head;
+                    for (int i = 1; i < index; i++)
+                    {
+                        if (curr.next != null)
+                            curr = curr.next;
+                        else
+                            break;
+                    }
+                    if (curr.next != null)
+                    {
+                        Node temp = curr.next;
+                        curr.next = newNode;
+                        newNode.next = temp;
+
+                    }
+                    else
+                        curr.next = newNode;
+                }
+
+            }
+        }
+
+        /** Delete the index-th node in the linked list, if the index is valid. */
+        public void DeleteAtIndex(int index)
+        {
+            if (head != null)
+            {
+                Node curr = head;
+                if (index == 0)
+                    head = head.next;
+                else
+                {
+                    for (int i = 1; i < index; i++)
+                    {
+                        if (curr.next != null)
+                            curr = curr.next;
+                        else
+                            break;
+                    }
+                    if (curr.next == null || curr.next.next == null)
+                        curr.next = null;
+                    else
+                    {
+                        curr.next = curr.next.next;
+                    }
+                }
+
+            }
+        }
+
+        public static void Main()
+        {
+            MyLinkedList obj = new MyLinkedList();
+            obj.AddAtHead(1);
+            obj.AddAtHead(2);
+            obj.AddAtTail(9);
+            obj.AddAtTail(10);
+            obj.AddAtTail(11);
+            obj.AddAtIndex(3, 12);
+            Console.WriteLine(obj.Get(3));
+            Console.WriteLine(obj.Get(8));
+            Console.WriteLine(obj.Get(-1));
+            obj.DeleteAtIndex(3);
+            //Test case 2
+            MyLinkedList obj2 = new MyLinkedList();
+            obj2.AddAtHead(1);
+            obj2.AddAtTail(3);
+            obj2.AddAtIndex(1, 2);
+            obj2.Get(1);
+            obj2.DeleteAtIndex(0);
+            obj2.Get(0);
+        }
+    }
+}
