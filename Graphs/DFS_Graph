@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+
+namespace Graphs
+{
+    public class Node
+    {
+        public Node()
+        {
+            Neighbours = new List<Node>();
+        }
+
+        public int Value { get; set; }
+        public List<Node> Neighbours { get; set; }
+    }
+    class DFS
+    {
+        public void DFSMethod(Node topNode)
+        {
+            Stack<Node> stck = new Stack<Node>();
+            HashSet<int> seen = new HashSet<int>();
+            stck.Push(topNode);
+            while(stck.Count!=0)
+            {
+                var output = stck.Pop();
+
+                if(!seen.Contains(output.Value))
+                {
+                    Console.WriteLine(output.Value);
+                    seen.Add(output.Value);
+                }
+
+                foreach(var node in output.Neighbours)
+                {
+                    if(!seen.Contains(node.Value))
+                    {
+                        stck.Push(node);
+                    }
+                }
+
+            }
+
+        }
+        public static void Main(string[] args)
+        {
+            Node topNode = new Node() { Value = 1 };
+            topNode.Neighbours.Add(new Node() { Value = 2, Neighbours = new List<Node> { new Node() { Value = 5, Neighbours = new List<Node> { new Node() { Value = 9 } } } } });
+            topNode.Neighbours.Add(new Node() { Value = 3, Neighbours = new List<Node> { new Node() { Value = 6, Neighbours = new List<Node> { new Node() { Value = 10 } } }, new Node() { Value = 7 } } });
+            topNode.Neighbours.Add(new Node(){ Value = 4, Neighbours = new List<Node >() { new Node() { Value = 8 } } });
+            DFS obj = new DFS();
+            obj.DFSMethod(topNode);
+        }
+    }
+}
