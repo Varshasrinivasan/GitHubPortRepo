@@ -6,6 +6,9 @@
  *     public ListNode(int x) { val = x; }
  * }
  */
+// Problem : Given a sorted linked list, delete all duplicates such that each element appear only once.
+// TC : O(N)
+// SC : O(1)
 public class Solution {
     public ListNode DeleteDuplicates(ListNode head) {
         if(head==null)
