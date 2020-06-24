@@ -1,0 +1,61 @@
+//Write code to partition a linked list around a value x, such that all nodes less than x come before all nodes greater than or equal tox.
+//If x is contained within the list, the values of x only need to be after the elements less than x (see below).
+//The partition element x can appear anywhere in the "right partition"; it does not need to appear between the left and right partitions.
+// TC : O(N)
+// SC : O(1)
+using DataStructures;
+
+namespace LinkedList
+{
+    public class Partition
+    {
+        public static LinkedListNode PartitionMethod(LinkedListNode head, int partition)
+        {
+            if(head==null)
+            {
+                return null;
+            }
+            LinkedListNode greaterList = new LinkedListNode(-1);
+            LinkedListNode greaterList_curr = greaterList;
+            LinkedListNode lesserlist = new LinkedListNode(-1);
+            LinkedListNode lesserlist_curr = lesserlist;
+            while(head!=null)
+            {
+                LinkedListNode next_node = head.next;
+                if(head.data>partition)
+                {
+                    greaterList_curr.next = head;
+                    greaterList_curr = greaterList_curr.next;
+                }
+                else
+                {
+                    lesserlist_curr.next = head;
+                    lesserlist_curr = lesserlist_curr.next;
+                }
+                head = head.next;
+            }
+            lesserlist_curr.next = greaterList.next;
+            greaterList.next = null;
+
+
+            return lesserlist.next;
+        }
+
+        public static void Main()
+        {
+            LinkedListNode l1 = new LinkedListNode(0);
+            LinkedListNode l2 = new LinkedListNode(1);
+            LinkedListNode l3 = new LinkedListNode(3);
+            LinkedListNode l4 = new LinkedListNode(2);
+            LinkedListNode l5 = new LinkedListNode(2);
+            LinkedListNode l6 = new LinkedListNode(3);
+            l1.next = l2;
+            l2.next = l3;
+            l3.next = l4;
+            l4.next = l5;
+            l5.next = l6;
+            l6.next = null;
+            var result = PartitionMethod(l1,2);
+        }
+    }
+}
