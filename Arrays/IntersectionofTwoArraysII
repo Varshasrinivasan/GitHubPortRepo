@@ -1,0 +1,41 @@
+// Problem : Given two arrays, write a function to compute their intersection.
+// TC : O(n+m)
+// SC : O(n + m)
+public class Solution {
+    public int[] Intersect(int[] nums1, int[] nums2) {
+        
+        int len1 = nums1.Length;
+        int len2 = nums2.Length;
+        if(len1==0 && len2!=0)
+        {
+            return new int[0];
+        }
+        if(len1!=0 && len2==0)
+        {
+            return new int[0];
+        }
+        List<int> res = new List<int>();
+        Dictionary<int,int> dict1 = new Dictionary<int,int>();
+        for(int i=0;i<len1;i++)
+        {
+            if(dict1.ContainsKey(nums1[i]))
+            {
+                dict1[nums1[i]]++;
+            }
+            else
+            {
+                dict1.Add(nums1[i],1);
+            }
+        }
+         for(int i=0;i<len2;i++)
+        {
+            if(dict1.ContainsKey(nums2[i]) && dict1[nums2[i]] >0)
+            {
+                res.Add(nums2[i]);
+                dict1[nums2[i]]--;
+            }
+        }
+        
+        return res.ToArray();
+    }
+}
