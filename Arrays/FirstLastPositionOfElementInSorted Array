@@ -1,0 +1,75 @@
+//Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value.
+//Your algorithm's runtime complexity must be in the order of O(log n).
+// TC : O(logN)
+// SC :O(1)
+public class Solution {
+    public int[] SearchRange(int[] nums, int target) {
+        int[] res = new int[2];
+        
+         res[0] = findLowIndex(nums,target);
+         res[1] = findHighIndex(nums,target);
+        
+        return res;
+    }
+    public int findLowIndex(int[] arr, int key) {
+    int len = arr.Length;
+    if(len==0)
+    {
+      return -1;
+    }
+    int start = 0;
+    int end = len-1;
+    while(start<=end)
+    {
+      int mid = start +(end-start)/2;
+      if(arr[mid]<key)
+      {
+        start = mid+1;
+      }
+      else
+      {
+         end = mid-1;
+      }
+    }
+        if(start>=0 && start<arr.Length && arr[start]==key)
+        {
+         
+             return start;   
+        }
+        else
+        {
+            return -1;
+        }
+  }
+
+  public int findHighIndex(int[] arr, int key) {
+   int len = arr.Length;
+    if(len==0)
+    {
+      return -1;
+    }
+    int start = 0;
+    int end = len-1;
+    while(start<=end)
+    {
+      int mid = start +(end-start)/2;
+      if(arr[mid]<=key)
+      {
+        start = mid+1;
+      }
+      else
+      {
+        end = mid-1;
+      }
+    }
+      Console.WriteLine(end);
+    if(end>=0 &&end<arr.Length && arr[end]==key)
+        {
+          return end;   
+        }
+        else
+        {
+            return -1;
+        }
+  }
+}
