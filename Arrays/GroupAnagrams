@@ -1,0 +1,30 @@
+// Problem : Given an array of strings, group anagrams together.
+// TC : O(NKlogK)
+// SC : O(NK)
+public class Solution {
+    public IList<IList<string>> GroupAnagrams(string[] strs) {
+        int len = strs.Length;
+        if(len==0)
+        {
+            return new List<IList<string>>();
+        }
+        Dictionary<string,List<string>> dict = new Dictionary<string,List<string>>();
+        for(int i=0;i<len;i++)
+        {
+            var str = strs[i].ToArray();
+            Array.Sort(str);
+             string key = String.Join("", str);
+            if(dict.ContainsKey(key))
+            {
+                dict[key].Add(strs[i]);
+            }
+            else
+            {
+                var val = new List<string>();
+                val.Add(strs[i]);
+                dict.Add(key,val);
+            }
+        }
+        return new List<IList<string>>(dict.Values);
+    }
+}
