@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+//Consider all the leaves of a binary tree.  From left to right order, the values of those leaves form a leaf value sequence.
+// TC : O(N+M)
+// SC : O(N+M)
+public class Solution {
+    public bool LeafSimilar(TreeNode root1, TreeNode root2) {
+        if(root1==null && root2==null)
+        {
+            return true;
+        }
+        else if(root1==null || root2==null)
+        {
+            return false;
+        }
+        var nodes1 = DFS(root1);
+        var nodes2 = DFS(root2);
+        return nodes1.Equals(nodes2);
+    }
+    
+    public string DFS(TreeNode root)
+    {
+        Stack<TreeNode> stck = new Stack<TreeNode>();
+        var leafnodes = new StringBuilder();
+        stck.Push(root);
+        while(stck.Count>0)
+        {
+            var temp = stck.Pop();
+            if(temp.left==null && temp.right==null)
+            {
+                leafnodes.Append(temp.val);
+            }
+            if(temp.left!=null)
+            {
+                stck.Push(temp.left);
+            }
+            if(temp.right!=null)
+            {
+                stck.Push(temp.right);
+            }
+        }
+        return leafnodes.ToString();
+    }
+}Leaf-Similar Trees
