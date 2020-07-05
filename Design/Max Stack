@@ -1,0 +1,72 @@
+// Problem :Design a max stack that supports push, pop, top, peekMax and popMax.
+// push(x) -- Push element x onto stack.
+// pop() -- Remove the element on top of the stack and return it.
+// top() -- Get the element on the top.
+// peekMax() -- Retrieve the maximum element in the stack.
+// popMax() -- Retrieve the maximum element in the stack, and remove it. If you find more than one maximum elements, only remove the top-most one.
+
+
+public class MaxStack {
+ public Stack<int> stck;
+    public Stack<int> maxStck;
+    /** initialize your data structure here. */
+    public MaxStack() {
+         stck = new Stack<int>();
+        maxStck = new Stack<int>();
+    }
+    
+    public void Push(int x) {
+        if(!maxStck.Any())
+        {
+            maxStck.Push(x);
+        }
+        else if(maxStck.Peek()<=x)
+        {
+            maxStck.Push(x);
+        }
+        stck.Push(x);
+    }
+    
+    public int Pop() {
+        int elem = stck.Pop();
+        if(elem== maxStck.Peek())
+        {
+            maxStck.Pop();
+        }
+        return elem;
+    }
+    
+    public int Top() {
+        return stck.Peek();
+    }
+    
+    public int PeekMax() {
+        return maxStck.Any()?maxStck.Peek():0;
+    }
+    
+    public int PopMax() {
+        
+         Stack<int> temp = new Stack<int>();
+        while(stck.Peek()!=maxStck.Peek())
+        {
+            temp.Push(stck.Pop());   
+        }
+        stck.Pop();
+        int result = maxStck.Pop();
+        while(temp.Count>0)
+        {
+            Push(temp.Pop());
+        }
+        return result;
+    }
+}
+
+/**
+ * Your MaxStack object will be instantiated and called as such:
+ * MaxStack obj = new MaxStack();
+ * obj.Push(x);
+ * int param_2 = obj.Pop();
+ * int param_3 = obj.Top();
+ * int param_4 = obj.PeekMax();
+ * int param_5 = obj.PopMax();
+ */
