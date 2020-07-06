@@ -1,0 +1,78 @@
+// Problem :Given two binary search trees root1 and root2.
+//Return a list containing all the integers from both trees sorted in ascending order.
+// TC : O(N+M)
+// SC : O(N+M)
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public IList<int> GetAllElements(TreeNode root1, TreeNode root2) {
+        var inorder_t1 = new List<int>();
+        var inorder_t2 = new List<int>();
+        InOrderTraversal(root1,inorder_t1);
+        InOrderTraversal(root2,inorder_t2);
+      
+        var res = new List<int>();
+          if(root1==null && root2==null)
+        {
+            return res;
+        }
+          if(root1==null && root2!=null)
+        {
+            return inorder_t2;
+        }
+          if(root1!=null && root2==null)
+        {
+            return inorder_t1;
+        }
+        int count1 = 0;
+        int count2 = 0;
+        while(count1<inorder_t1.Count && count2<inorder_t2.Count)
+        {
+            if(inorder_t1[count1]<inorder_t2[count2])
+            {
+                res.Add(inorder_t1[count1]);
+                    count1++;
+                    
+            }
+            else
+            {
+                res.Add(inorder_t2[count2]);
+                    count2++;
+            }
+        }
+        while(count1<inorder_t1.Count)
+        {
+            res.Add(inorder_t1[count1]);
+                    count1++;
+        }
+         while(count2<inorder_t2.Count)
+        {
+            res.Add(inorder_t2[count2]);
+                    count2++;
+        }
+        return res;
+    }
+    
+    public void InOrderTraversal(TreeNode root, List<int> res)
+    {
+        if(root==null)
+        {
+            return ;
+        }
+        InOrderTraversal(root.left,res);
+        res.Add(root.val);
+        InOrderTraversal(root.right,res);
+        
+    }
+}
