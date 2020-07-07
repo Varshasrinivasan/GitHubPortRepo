@@ -1,0 +1,51 @@
+// Problem :Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.
+// Calling next() will return the next smallest number in the BST.
+// TC : O(1)
+// SC :O(H)
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class BSTIterator {
+    public Stack<TreeNode> stck;
+    public BSTIterator(TreeNode root) {
+        stck = new Stack<TreeNode>();
+        ControllerInOrder(root);
+    }
+    
+    private void ControllerInOrder(TreeNode root)
+    {
+        while(root!=null)
+        {
+            stck.Push(root);
+            root=root.left;
+        }
+    }
+    
+    /** @return the next smallest number */
+    public int Next() {
+        var node = stck.Pop();
+        if(node.right!=null)
+        {
+            ControllerInOrder(node.right);
+        }
+        return node.val;
+    }
+    
+    /** @return whether we have a next smallest number */
+    public bool HasNext() {
+        return stck.Count>0;
+    }
+}
+
+/**
+ * Your BSTIterator object will be instantiated and called as such:
+ * BSTIterator obj = new BSTIterator(root);
+ * int param_1 = obj.Next();
+ * bool param_2 = obj.HasNext();
+ */
