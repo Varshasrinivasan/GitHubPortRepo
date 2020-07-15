@@ -1,0 +1,83 @@
+// Problem : Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
+// TC : O(NlogN) Sorting + O(N)(looking at all elements) + N inserts into heap O(NlogN)
+// SC:O(N)
+public class Solution {
+    public int MinMeetingRooms(int[][] intervals) {
+        if (intervals.Length == 0) return 0;
+
+        Array.Sort(intervals, (a,b) => a[0] - b[0]);
+        heap_array = new int[intervals.Length];
+        heap_size= 0;
+        Insert(intervals[0][1]);
+
+        int count = 1;
+        for (int i = 1; i < intervals.Length; i++)
+        {
+            var curInterval = intervals[i];
+            Console.WriteLine(curInterval[0]);
+            if (heap_array[0] <= curInterval[0])
+            {
+                ExtractMin();
+            }
+            else
+            {
+                count++;
+            }
+
+           Insert(curInterval[1]);
+        }
+        return count;
+    }
+    public int[] heap_array;
+    public int heap_size;
+    
+    public void MinHeapify(int i)
+        {
+            int left = i * 2 + 1;
+            int right = i * 2 + 2;
+            int smallest = i;
+            if (left < heap_size && heap_array[left] < heap_array[smallest])
+                smallest = left;
+            if (right < heap_size && heap_array[right] < heap_array[smallest])
+                smallest = right;
+            if (smallest != i)
+            {
+                Swap(i, smallest);
+                MinHeapify(smallest);
+            }
+
+        }
+
+        public int ExtractMin()
+        {
+            if (heap_size > 0)
+            {
+                int min = heap_array[0];
+                heap_array[0] = heap_array[heap_size - 1];
+                heap_size--;
+                MinHeapify(0);
+                return min;
+            }
+            return 0;
+        }
+
+        public void Insert(int x)
+        {
+            heap_size++;
+            heap_array[heap_size - 1] = x;
+
+            int i = heap_size - 1;
+            while (i != 0 && heap_array[i] < heap_array[(i - 1) / 2])
+            {
+                Swap(i, (i - 1) / 2);
+                i = (i - 1) / 2;
+            }
+        }
+    
+        public void Swap(int x, int y)
+        {
+            int temp = heap_array[x];
+            heap_array[x] = heap_array[y];
+            heap_array[y] = temp;
+        }
+}
