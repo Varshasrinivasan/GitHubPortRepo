@@ -1,0 +1,26 @@
+//Problem : Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), determine if a person could attend all meetings.
+// TC : O(LogN) sorting of N elements
+// SC :O(1)
+public class Solution {
+    public bool CanAttendMeetings(int[][] intervals) {
+        int len = intervals.Length;
+        if(len<=1)
+            return true;
+        // the intervals need to be sorted
+      Array.Sort(intervals, (a, b) => a[0] - b[0]);
+     var lastELement = intervals[0];
+        for(int i=1;i<len;i++)
+        {
+            var currElement = intervals[i];
+            if(currElement[0]<lastELement[1])
+            {
+                return false;
+            }
+            else
+            {
+                lastELement= currElement;
+            }
+        }
+        return true;
+    }
+}
