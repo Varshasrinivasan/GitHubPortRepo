@@ -1,0 +1,45 @@
+// Problem : Given a paragraph and a list of banned words, return the most frequent word that is not in the list of banned words.  It is guaranteed there is at least one word that isn't banned, and that the answer is unique.
+//Words in the list of banned words are given in lowercase, and free of punctuation.  Words in the paragraph are not case sensitive.  The answer is in lowercase.
+// TC : O(len1 + len2)
+// SC : O(len1 + len2)
+public class Solution {
+    public string MostCommonWord(string paragraph, string[] banned) {
+        HashSet<string> s = new HashSet<string>(banned);
+        Dictionary<string,int> d = new Dictionary<string,int>();
+        paragraph =paragraph.ToLower();
+       paragraph = paragraph.Replace("!", " ")
+                                 .Replace("?", " ")
+                                 .Replace("'", " ")
+                                 .Replace(",", " ")
+                                 .Replace(";", " ")
+                                 .Replace(".", " ")
+                                 .Trim();
+        int currMax = int.MinValue;
+        string max_string= "";
+        foreach(string i in paragraph.Split(" "))
+        {
+            if(i != string.Empty && d.ContainsKey(i) && !s.Contains(i))
+            {
+                d[i]++; 
+                if(currMax<d[i])
+                {
+                    currMax=d[i];
+                    max_string=i;
+                }
+               
+            }
+            else if(i != string.Empty && !s.Contains(i))
+            {
+                d.Add(i,1);
+                 if(currMax<d[i])
+                {
+                     currMax=d[i];
+                    max_string=i;
+                }
+            }
+            
+        }
+        return max_string;
+        
+    }
+}
