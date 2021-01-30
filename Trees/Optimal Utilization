@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+
+namespace ArraysAndStrings
+{
+    // Problem : Given 2 lists a and b. Each element is a pair of integers where the first integer represents the unique id
+    //and the second integer represents a value. Your task is to find an element from a and an element form b such that the sum
+    //of their values is less or equal to target and as close to target as possible. Return a list of ids of selected elements.
+    //If no pair is possible, return an empty list.
+    // TC : O(aloga + blogb)
+    // SC : O(a*b)
+    public class OptimalUtilization
+    {
+        public static void Main()
+        {
+            var a = new int[][] {new int[]{1,8 }, new int[] { 2,15 }, new int[] { 3,9 } };
+            var b = new int[][] { new int[] { 1,8 }, new int[] { 2,11 }, new int[] { 3,12 } };
+            var res = OptimalUtilizationMethod(a, b, 22);
+        }
+
+        public static List<List<int>> OptimalUtilizationMethod(int[][] a, int[][] b, int target)
+        {
+            // Sort arrays based on last element
+            Array.Sort(a, (a1, b1) => a1[1] - b1[1]);
+            Array.Sort(b, (a2, b2) => a2[1] - b2[1]);
+            int max = int.MinValue;
+            int first = 0;
+            int last = b.Length - 1;
+            var res = new List<List<int>>();
+            while (first<a.Length && last>=0)
+            {
+                int sum = a[first][1] + b[last][1];
+                if (sum>target)
+                {
+                    last--;
+                }
+                else
+                {
+                    // sum is less or equal to target
+                    if (sum > max)
+                    {
+                        max = sum;
+                        // closer sum found! remove previous results since this sum is closer
+                        res.Clear();
+
+                    }
+                    if (sum == max) // if the sum is the current max, add
+                        res.Add(new List<int>{ a[first][0], b[last][0] });
+                    first++; // increment to find closer to target
+
+                }
+            }
+            return res;
+        }
+    }
+}
