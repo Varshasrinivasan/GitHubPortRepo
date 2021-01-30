@@ -1,0 +1,60 @@
+// Problem : We are given a binary tree (with root node root), a target node, and an integer value K.
+// Return a list of the values of all nodes that have a distance K from the target node.  The answer can be returned in any order.
+// TC : O(N) --> we have to look at all the nodes
+// SC :O(N) --> we have to store all the parents
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    Dictionary<TreeNode, TreeNode> parent;
+    public IList<int> DistanceK(TreeNode root, TreeNode target, int K) {
+       parent = new Dictionary<TreeNode, TreeNode>();
+        dfs(root, null);
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        queue.Enqueue(target);
+        var seen = new HashSet<TreeNode>();
+        seen.Add(target);
+        int dist = 0;
+        while (queue.Count!=0) {
+            int size = queue.Count();
+           if (dist == K) {
+                    var ans = new List<int>();
+                    foreach (TreeNode n in queue)
+                        ans.Add(n.val);
+                    return ans;
+                }
+           for(int i = 0; i<size; i++){
+                TreeNode node = queue.Dequeue();
+                seen.Add(node);
+                if (node.left != null && !seen.Contains(node.left)) {
+                    seen.Add(node.left);
+                    queue.Enqueue(node.left);
+                }
+                if (node.right != null && !seen.Contains(node.right)) {
+                    seen.Add(node.right);
+                    queue.Enqueue(node.right);
+                }
+                TreeNode par = parent[node];
+                if (par != null && !seen.Contains(par)) {
+                    seen.Add(par);
+                    queue.Enqueue(par);
+                }
+            }
+            dist++;
+        }
+        return new List<int>();
+    }
+    public void dfs(TreeNode node, TreeNode par) {
+        if (node != null) {
+            parent.Add(node, par);
+            dfs(node.left, node);
+            dfs(node.right, node);
+        }
+    }
+}
