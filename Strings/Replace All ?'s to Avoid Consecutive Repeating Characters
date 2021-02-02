@@ -1,0 +1,43 @@
+// Problem : Given a string s containing only lower case English letters and the '?' character, convert all the '?' characters into lower case letters such that the final string does not contain any consecutive repeating characters. You cannot modify the non '?' characters.
+// It is guaranteed that there are no consecutive repeating characters in the given string except for '?'.
+// Return the final string after all the conversions (possibly zero) have been made. If there is more than one solution, return any of them. It can be shown that an answer is always possible with the given constraints.
+// TC : O(N)
+// SC :O(N)
+public class Solution {
+    public string ModifyString(string s) {
+        
+        int len =s.Length;
+        if(len==0)
+            return s;
+        var res = new StringBuilder();
+        for(int i=0;i<len;i++)
+        {
+            if(s[i]=='?')
+            {
+                char prev = i==0?' ' : res[i-1];
+                char next = i==len-1?' ' : s[i+1];
+                char randomChar =' ';
+                if(prev!='a' && next!='a')
+                {
+                    randomChar='a';
+                }
+                else if(prev!='b' && next!='b')
+                {
+                    randomChar='b';
+                }
+                 else if(prev!='c' && next!='c')
+                {
+                    randomChar='c';
+                }
+                res.Append(randomChar);
+            }
+            else
+            {
+                res.Append(s[i]);
+                
+            }
+        }
+        
+        return res.ToString();
+    }
+}
