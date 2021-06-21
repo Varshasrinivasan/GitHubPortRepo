@@ -1,0 +1,46 @@
+// Problem : There are several cards arranged in a row, and each card has an associated number of points. The points are given in the integer array cardPoints.
+// In one step, you can take one card from the beginning or from the end of the row. You have to take exactly k cards.
+// Your score is the sum of the points of the cards you have taken.
+// Given the integer array cardPoints and the integer k, return the maximum score you can obtain.
+
+
+public class Solution {
+    public int MaxScore(int[] cardPoints, int k) {
+        int len = cardPoints.Length;
+        if(len==0 || k==0)
+        {
+            return 0;
+        }
+        int totalScore = 0;
+        foreach(var c in cardPoints)
+        {
+            totalScore+=c;
+        }
+        
+        if(k==len)
+        {
+            return totalScore;
+        }
+        
+        int requiredWindowLength = len - k;
+        int presentSubArrayCount =0;
+        int windowStart=0;
+        int minSubArrayScore =int.MaxValue;
+        int count=0;
+        for(int windowEnd=0;windowEnd<len;windowEnd++)
+        {
+            presentSubArrayCount =presentSubArrayCount+ cardPoints[windowEnd];
+            count++;
+            if(count==requiredWindowLength)
+            {
+                minSubArrayScore = Math.Min(minSubArrayScore,presentSubArrayCount);
+                presentSubArrayCount =presentSubArrayCount- cardPoints[windowStart];
+                count--;
+                windowStart++;
+            }
+        }
+        
+        return totalScore-minSubArrayScore;
+
+    }
+}
