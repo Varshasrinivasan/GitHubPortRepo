@@ -1,0 +1,72 @@
+// Problem :Create a timebased key-value store class TimeMap, that supports two operations.
+// 1. set(string key, string value, int timestamp)
+// Stores the key and value, along with the given timestamp.
+// 2. get(string key, int timestamp)
+// Returns a value such that set(key, value, timestamp_prev) was called previously, with timestamp_prev <= timestamp.
+// If there are multiple such values, it returns the one with the largest timestamp_prev.
+// If there are no values, it returns the empty string ("").
+
+public class TimeMap {
+    
+    Dictionary<string, Dictionary<string,int>> dict;
+
+    /** Initialize your data structure here. */
+    public TimeMap() {
+        dict = new Dictionary<string, Dictionary<string,int>>(); 
+    }
+    
+    public void Set(string key, string value, int timestamp) {
+        if(dict.ContainsKey(key))
+        {
+            var val = dict[key];
+            if(val.ContainsKey(value))
+            {
+                val[value]= timestamp;
+            }
+            else
+            {
+                val.Add(value,timestamp);
+            }
+        }
+        else
+        {
+            var val = new Dictionary<string,int>();
+            val.Add(value,timestamp);
+            dict.Add(key, val);
+        }
+    }
+    
+    public string Get(string key, int timestamp) {
+        
+        if(dict.ContainsKey(key))
+        {
+            string ret = "";
+            int maxTimeStamp = int.MinValue;
+            foreach(var v in dict[key])
+            {
+                if(v.Value<=timestamp)
+                {
+                    if(v.Value>maxTimeStamp)
+                    {
+                        ret = v.Key;
+                        maxTimeStamp = v.Value;
+                    }
+                    
+                }
+                
+            }
+            return ret;
+        }
+        else
+        {
+            return "";
+        }
+    }
+}
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap obj = new TimeMap();
+ * obj.Set(key,value,timestamp);
+ * string param_2 = obj.Get(key,timestamp);
+ */
